@@ -6,4 +6,5 @@ module.exports = {
     "@"
     +process.env.HOST+
     "/"
+    +process.env.DATABASE
   };
