@@ -1,0 +1,28 @@
+<div class="user-edit">
+      <form #userEditForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <h1 class="h1-strong">{{title}}</h1>
+
+        <div class="alert alert-success" *ngIf="status == 'success'">
+          Account details updated successfully.
+        </div>
+
+        <div class="alert alert-danger" *ngIf="status == 'error'">
+            Error updating account details.
+        </div>
+        
+        <div class="col-md-6 form-group">
+            <p>
+                <label> Username</label>
+                <input type="text" name="username" #username="ngModel" [(ngModel)]="user.username" required class="form-control"/>
+                <span *ngIf="!username.value && username.touched">
+                    Username is required
+                </span>
+            </p>
+        </div>
+        <div class="col-md-12 form-group">
+            <input type="submit" value="Update" class="btn btn-warning" [disabled]="!userEditForm.form.valid" />
+        </div>
+    </form>
+
+</div>

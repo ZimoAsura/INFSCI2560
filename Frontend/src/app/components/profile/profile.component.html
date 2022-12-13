@@ -1,0 +1,44 @@
+<div class="col-lg-8">
+  <div class="loading" *ngIf="loading">
+    <img src="../../../assets/images/lg.dual-ring-loader.gif" />
+  </div>
+
+  <div id="data-profile" *ngIf="user">
+    <div class="profile-info">
+      <div class="avatar pull-left">
+        <img src="{{ url + 'get-image-user/' + user.image}}" *ngIf="user.image"/>
+        <img src="assets/user-icon.jpg" *ngIf="!user.image"/>
+      </div>
+
+      <div class="user-name pull-left">
+        <div class="clearfix"></div>
+          <div class="pull-left">
+            <p class="name">{{user.username}}</p>
+          </div>
+
+          <div class="clearfix"></div>
+
+      </div>
+
+      <div class="stats pull-left" *ngIf="stats">
+
+        <div class="following-data">
+          <a [routerLink]="['/profile', user._id]">
+            <span class="number-stats">
+              <strong>{{stats.posts}}</strong>
+            </span>
+            <span class="label-stats">
+              &nbsp;posts
+            </span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-lg-12 posts" *ngIf="user">
+      <posts [user]="user._id"></posts>
+    </div>
+
+  </div>
+</div>
+<sidebar></sidebar>

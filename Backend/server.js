@@ -3,8 +3,9 @@ const express = require("express");
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const userRouter = require("./app/routes/user")
-const User = require('./app/models/user')
+const userRouter = require("./app/routes/user");
+const postRouter = require("./app/routes/posts");
+const User = require('./app/models/user');
 
 const app = express();
 // set port, listen for requests
@@ -27,16 +28,23 @@ database.mongoose
     process.exit();
   });
 
+//CORS Headers Configuration
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+  next();
+});
+
 // parse requests of content-type - application/json
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(async (req, res, next) => {
- if (req.headers["x-access-token"]) {
-  const accessToken = req.headers["x-access-token"];
-  console.log(accessToken)
+  console.log("users!!")
+ if (req.headers["authorization"]) {
+  const accessToken = req.headers["authorization"];
   const { id, exp } = await jwt.verify(accessToken, process.env.SECRET);
-  // const decoded = await jwt.verify(accessToken, process.env.SECRET)
-  // console.log("app use:", userId, decoded)
   // Check if token has expired
   if (exp < Date.now().valueOf() / 1000) { 
    return res.status(401).json({ error: "JWT token has expired, please login to obtain a new one" });
@@ -49,6 +57,8 @@ app.use(async (req, res, next) => {
 });
 
 app.use('/', userRouter);
+app.use('/', postRouter);
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);

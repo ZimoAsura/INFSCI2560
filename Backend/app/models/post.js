@@ -2,19 +2,10 @@ const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema(
 	{
-		Titel: { type: String, required: true, unique: true },
-        Content: { type: String, required: true, unique: true },
-        PosterUserName: { type: String, required: true },
-        Tags: [String],
-        LikeCount: {
-            type: Number,
-            default: 0,
-        },
-        CreatedAt: {
-            type: Date,
-            default: new Date(),
-            required: true
-        },
+        text: { type: String, required: true },
+        file: { type: String, required: true, },
+        created_at: { type: String},
+        user: { type: mongoose.Schema.ObjectId, ref: 'UserSchema'}
 	},
 	{ collection: 'posts' }
 );

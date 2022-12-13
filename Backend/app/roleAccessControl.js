@@ -4,14 +4,17 @@ const Role = require('./middlewares/role')
 
 exports.roleAccessControl = (function() {
     accessControl.grant(Role.User)
-    .readOwn("profile")
-    .updateOwn("profile")
+    .readAny("post")
+    .createOwn("post")
+    .updateAny("post")
+    .deleteOwn("post")
 
     accessControl.grant(Role.Admin)
     .extend(Role.User)
-    .readAny("profile")
-    .updateAny("profile")
-    .deleteAny("profile")
+    .readAny("post")
+    .readAny("user")
+    .updateAny("post")
+    .deleteAny("post")
 
     return accessControl;
 })();

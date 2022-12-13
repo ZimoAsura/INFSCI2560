@@ -20,7 +20,7 @@ exports.grantAccess = function (action, resource) {
 exports.allowIfLoggedin = async (req, res, next) => {
     try {
      const user = res.locals.loggedInUser;
-     console.log("logged in", user)
+     console.log("logged in", user.username)
      if (!user)
       return res.status(401).json({
        error: "You need to be logged in to access this route"

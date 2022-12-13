@@ -1,0 +1,61 @@
+<div id="user-card" class="col-lg-4 panel panel-default pull-left">
+    <a class="avatar pull-left" [routerLink]="['/account']">
+        <img src="assets/user-icon.jpg" *ngIf="!identity.image" />
+    </a>
+
+    <div class="name-surname pull-left">
+         <a [routerLink]="['/profile/', identity._id]" class="username">
+            {{identity.username}}
+        </a>
+        <p class="nickname">
+            {{identity.username}}
+        </p>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+
+        <div class="stats" *ngIf="stats">
+            <div class="following-data">
+                 <a [routerLink]="['/profile', identity._id]" class="username">
+                    <span class="label-stats">
+                        Posts
+                    </span>
+                    <span class="number-stats">
+                        {{stats.posts}}
+                    </span>
+                </a>
+            </div>
+        </div>
+</div>
+
+<!--POSTS FORM-->
+
+<div id="new-post" class="col-lg-4 pull-left panel panel-default">
+    <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm, $event)" class="col-lg-10 post-form">
+        <p>
+            <label class="post-text">Write a post!</label>
+            <textarea name="text" #text="ngModel" [(ngModel)]="post.text" class="form-control" [disabled]="loading" required></textarea>
+            <span class="warning-text" *ngIf="!text.valid && text.touched">
+                <i>Some text is required</i>
+            </span>
+        </p>
+
+        <input type="submit" value="Send" class="btn btn-success" [disabled]="!newPubForm.form.valid" [disabled]="loading"/>
+
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

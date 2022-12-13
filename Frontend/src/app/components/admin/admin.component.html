@@ -1,0 +1,20 @@
+<div id="posts"  *ngIf="userList && userList.length > 0">
+  <div *ngFor="let user of userList" class="item-posts">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div>
+          <span class="user-name">
+            {{user.username}}
+          </span> 
+                                   
+          <button type="button" class="pull-right btn btn-danger" (click)="deleteUser(user._id)">
+            Delete
+          </button>                    
+                      
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
