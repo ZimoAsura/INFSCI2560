@@ -10,7 +10,7 @@ import { Title }  from '@angular/platform-browser';
   styleUrls: ['./app.component.css'],
   providers: [UserService]
 })
-export class AppComponent implements OnInit, DoCheck{
+export class AppComponent implements OnInit{
   public title: string;
   public identity;
   public url: string;
@@ -30,17 +30,12 @@ export class AppComponent implements OnInit, DoCheck{
       //Call User Service to get user identity if available in global component
       this.identity = this._userService.getIdentity();
   }
-    
-  //With any change in components, refresh variables
-    ngDoCheck(){
-        this.identity = this._userService.getIdentity();
-    }
-    
-    lougout(){
+        
+  logout(){
         localStorage.clear();
         this.identity = null;
         this._router.navigate(['/']);
         
-    }
+  }
 
 }

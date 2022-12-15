@@ -7,7 +7,6 @@
     text-decoration: none !important;
 }
 
-
 #posts {
     margin-left: 15px;
 }
@@ -40,37 +39,13 @@
     margin-top: -19px !important;
 }
 
-.delete, .show-image{
+.delete{
     color: darkgray;
     transition: 0.2s;
 }
 
-
-.show-image{
-    margin-right: 8px;
-}
-
 .delete:hover{
     color: #b31111;
-}
-
-.show-image:hover{
-    color: black;
-}
-
-.post-image{
-    position: relative;
-}
-
-.close-image{
-    position: absolute;
-    top: 22px;
-    right: 34px;
-    background-color: white;
-    opacity: 0.6;
-    border-radius: 14px;
-    height: 25px;
-    transition: 0.2s;
 }
 
 .glyphicon-remove-circle{
@@ -80,13 +55,8 @@
     transition: 0.2s;
 }
 
-.close-image:hover,
 .glyphicon-remove-circle:hover{
     opacity: 1;
-}
-
-.post-image{
-    margin-bottom: 21px;
 }
 
 .modal-title{

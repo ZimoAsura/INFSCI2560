@@ -13,8 +13,9 @@ exports.roleAccessControl = (function() {
     .extend(Role.User)
     .readAny("post")
     .readAny("user")
+    .updateAny("user")
     .updateAny("post")
-    .deleteAny("post")
+    .deleteAny("user")
 
     return accessControl;
 })();

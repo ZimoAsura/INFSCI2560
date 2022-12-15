@@ -12,7 +12,6 @@ import { GLOBAL } from '../../services/global';
 })
 export class UserEditComponent implements OnInit {
     
-    
   public title: string;
   public user: User;
   public identity;
@@ -54,8 +53,7 @@ export class UserEditComponent implements OnInit {
             if(errorMessage != null){
                 this.status = 'error';
             }
-        }
-          
+        }       
       );
   }
 }

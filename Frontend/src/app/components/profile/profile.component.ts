@@ -21,8 +21,6 @@ export class ProfileComponent implements OnInit {
     public token: string;
     public stats;
 
-    public loading: boolean;
-
   constructor(
         private _route: ActivatedRoute,
         private _router: Router,
@@ -32,15 +30,11 @@ export class ProfileComponent implements OnInit {
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
         this.url = GLOBAL.url;
-
-        this.loading = true;
-
     }
 
   ngOnInit() {
       console.log('Profile Component Working...');
       this.loadPage();
-      this.loading = false;
       console.log(this.user)
   }
 

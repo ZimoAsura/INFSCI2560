@@ -4,11 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import { GLOBAL } from './global';
 import { Post } from '../models/post';
 
-
 @Injectable()
 export class PostService {
-    public url: string;
-    
+    public url: string;   
     constructor(private _http: HttpClient){
         this.url = GLOBAL.url;
     }
@@ -23,28 +21,21 @@ export class PostService {
         return this._http.post(this.url + 'createpost', params, {headers: headers});
     }
     
-    
     getPosts(token): Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                         .set('Authorization', token);
         return this._http.get(this.url + 'posts', {headers: headers});
     }
     
-    
-    
      getPostUser(token, user_id, page = 1): Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                        .set('Authorization', token);
-        
+                                        .set('Authorization', token);     
         return this._http.get(this.url + 'posts-user/' + user_id, {headers: headers});
      }
     
-    
     deletePost(token, id): Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                        .set('Authorization', token);
-        
+                                        .set('Authorization', token);   
         return this._http.delete(this.url + 'delete-post/' + id, {headers: headers});
-    }
-    
+    }   
 }

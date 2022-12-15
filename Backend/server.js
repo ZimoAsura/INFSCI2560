@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const userRouter = require("./app/routes/user");
 const postRouter = require("./app/routes/posts");
+const likeRouter = require("./app/routes/likes");
 const User = require('./app/models/user');
 
 const app = express();
@@ -41,7 +42,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(async (req, res, next) => {
-  console.log("users!!")
  if (req.headers["authorization"]) {
   const accessToken = req.headers["authorization"];
   const { id, exp } = await jwt.verify(accessToken, process.env.SECRET);
@@ -58,13 +58,9 @@ app.use(async (req, res, next) => {
 
 app.use('/', userRouter);
 app.use('/', postRouter);
+app.use('/', likeRouter);
 
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-
-// simple route
-// app.get("/", (req, res) => {
-//   res.json({ message: "Welcome to Zimo application." });
-// });

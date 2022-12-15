@@ -25,8 +25,7 @@ export class PostsComponent implements OnInit, OnChanges {
   public url: string;
   public status: string;
   public posts: any[];
-  public noMore = false;
-  public loading: boolean;
+  // public noMore = false;
   public likes: any[];
   public liked: boolean;
   @Input() user: string;
@@ -43,7 +42,6 @@ export class PostsComponent implements OnInit, OnChanges {
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
         this.url = GLOBAL.url;
-        this.loading = true;
     }
 
   ngOnInit() {
@@ -60,11 +58,8 @@ export class PostsComponent implements OnInit, OnChanges {
     this._postService.getPostUser(this.token, user).subscribe(
       response => {
         if(response.posts){
-          this.loading = false;
           this.posts = response.posts;
-          //UPDATE LIKES COUNTER AND HEART
-          console.log(response.posts)
-          // this.updateLikes();
+          this.updateLikes();
         } else {
           this.status = 'error';
         }
@@ -85,7 +80,6 @@ export class PostsComponent implements OnInit, OnChanges {
                       .then((value) => {
                         this.likes = [].concat(value);
 
-                        //CREATE NEW PROPERTY ON post TO STORE THE LIKES
                         Object.defineProperty(this.posts[index], 'likes', {
                           value: this.likes,
                           writable: true
@@ -95,13 +89,13 @@ export class PostsComponent implements OnInit, OnChanges {
                           value: false,
                           writable: true
                         });
-
+                        
+                        // show liked posts
                         this.likes.forEach((like) => {
-                          if(like.user._id == this.identity._id) {
+                          if(like.user == this.identity._id) {
                             this.posts[index].liked = true;
                           }
                         });
-
 
                       }).catch(error => console.log(error));
       });
@@ -110,7 +104,7 @@ export class PostsComponent implements OnInit, OnChanges {
   doLike(post, event: any) {
     if(post.liked){
       event.target.src = '../../../assets/images/empty-heart.png';
-      this.quitLike(post._id);
+      this.removeLike(post._id);
     }
     else if(!post.liked) {
       event.target.src = '../../../assets/images/liked-heart.png';
@@ -132,8 +126,7 @@ export class PostsComponent implements OnInit, OnChanges {
       });
   }
 
-
-  quitLike(postId){
+  removeLike(postId){
     this._likeService.deleteLike(this.token, postId).subscribe(
       response => {
         this.updateLikes();

@@ -17,33 +17,22 @@ export class LikeService {
         this.url = GLOBAL.url;    
      }
     
-    
     addLike(token, like): Observable<any>{
         let params = JSON.stringify(like);
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                         .set('Authorization', token);
-        
-        return this._http.post(this.url + 'like', params, {headers: headers});
-    }
-    
-    checkLike(token, postId): Observable<any>{
-        let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                        .set('Authorization', token);
-        
-        return this._http.get(this.url + 'like/' + postId, {headers: headers});
+        return this._http.post(this.url + 'addlike', params, {headers: headers});
     }
     
     deleteLike(token, postId): Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                         .set('Authorization', token);
-        
-        return this._http.delete(this.url + 'delete-like/' + postId, {headers: headers});
+        return this._http.delete(this.url + 'dislike/' + postId, {headers: headers});
     }
     
     getLikes(token, postId): Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                         .set('Authorization', token);
-        
-        return this._http.get(this.url + 'get-likes/' + postId, {headers: headers});
+        return this._http.get(this.url + 'post-like/' + postId, {headers: headers});
     }
 }

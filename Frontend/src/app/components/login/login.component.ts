@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit {
       this._userService.signup(this.user).subscribe(
         response => {
           this.identity = response.data.user;
+          console.log(response.data)
           if(!this.identity && !this.identity._id) {
             this.status == 'error';
             this.loginError = true;

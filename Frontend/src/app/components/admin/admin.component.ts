@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { GLOBAL } from '../../services/global';
@@ -17,6 +18,7 @@ export class AdminComponent implements OnInit {
   public userList: any[];
 
   constructor(
+    public _http: HttpClient,
     private _route: ActivatedRoute,
     private _router: Router,
     private _userService: UserService,
@@ -44,8 +46,11 @@ export class AdminComponent implements OnInit {
     this._userService.deleteUser(id, this.token).subscribe(
       response => {
         console.log('receive delete')
-
-      } 
+        this.getUsers();
+      },
+      error => {
+        console.log(error)
+      }
     )
   }
 

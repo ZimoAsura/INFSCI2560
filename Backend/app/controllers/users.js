@@ -2,9 +2,8 @@ require("dotenv").config();
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require("../models/user")
-const authorize = require('../middlewares/authorize')
+const Post = require("../models/post")
 const Role = require('../middlewares/role')
-const roleAccessControl = require('../roleAccessControl')
 
 exports.createUser = async (req, res) => {
     const { username, password } = req.body
@@ -49,6 +48,7 @@ exports.createUser = async (req, res) => {
 exports.login = async (req, res, next) => {
     const { username, password } = req.body
     const user = await User.findOne({ "username": username }).lean()
+    console.log(user, req.body)
 
     if (!user) {
         return res.status(500).json({ status: 'error', error: "Username doesn't exist" })
@@ -87,14 +87,13 @@ exports.getUser = async (req, res, next) => {
 }
 
 exports.deleteUser = async (req, res, next) => {
-    console.log('hit delete')
     var userId = req.params.id;
-    
-    //Inside the find we need to ensure that the current user is the creator of the publication
+    Post.find({'user': userId}).remove();
     User.find({'_id': userId}).remove(err => {
         if (err) return res.status(500).send({message: 'Error deleting the user'});        
-        return res.status(200).send({message: 'User successfully deleted'});
+        return res.status(200).send({message: 'User and the related posts are successfully deleted'});
     });
+
 }
 
 exports.updateUser = async (req, res, next)=> {
@@ -102,7 +101,7 @@ exports.updateUser = async (req, res, next)=> {
         var update = req.body;
         
         if(userId != req.user._id){
-            return res.status(500).send({message: 'You don´t have permission to update other user data '});
+            return res.status(401).send({message: 'You don´t have permission to update other user data '});
         }
 
         User.findByIdAndUpdate(userId, update, {new: true}, (err, userUpdated) => {

@@ -46,17 +46,17 @@
   width: 100% !important;
 }
 
-#user-card .name-surname {
+#user-card .username {
     font-size: 20px;
     margin: 10px;
     font-weight: 300;
 }
 
-#user-card .name-surname a{
+#user-card .username a{
   color: #555;
 }
 
-#user-card .name-surname .nickname{
+#user-card .username {
   color: #969393;
 }
 
@@ -150,12 +150,6 @@ textarea.form-control {
     color: white;
 }
 
-
-.upload-image{
-   width: 46%;
-   height: 26%;
-   border-radius: 15px;
-}
 
 label.post-text{
     font-size: 18px;

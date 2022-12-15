@@ -3,8 +3,7 @@ const moment = require("moment");
 
 exports.getPosts = async (req, res) => {
 
-    const posts = await Post.find({}).sort('-created_at').populate('user');
-
+    const posts = await Post.find({}).populate('user').sort('-created_at');
     return res.status(200).send({
         posts
     });
@@ -51,8 +50,10 @@ exports.getUserPosts = async (req, res) => {
     res.status(200).send({posts});
 }
 
-// exports.getPost = async (req, res) => {}
-// exports.updatePost = async (req, res) => {}
-// exports.deletePost = async (req, res) => {}
-// exports.likePost = async (req, res) => {}
-// exports.comment = async (req, res) => {}
+exports.deletePost = async (req, res) => {
+    var postId = req.params.id;
+    Post.find({'_id': postId}).remove(err => {
+        if (err) return res.status(500).send({message: 'Error deleting the post'});        
+        return res.status(200).send({message: 'The post is successfully deleted'});
+    });
+}

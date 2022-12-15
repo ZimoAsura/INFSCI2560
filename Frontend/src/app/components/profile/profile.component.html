@@ -1,13 +1,9 @@
 <div class="col-lg-8">
-  <div class="loading" *ngIf="loading">
-    <img src="../../../assets/images/lg.dual-ring-loader.gif" />
-  </div>
 
   <div id="data-profile" *ngIf="user">
     <div class="profile-info">
       <div class="avatar pull-left">
-        <img src="{{ url + 'get-image-user/' + user.image}}" *ngIf="user.image"/>
-        <img src="assets/user-icon.jpg" *ngIf="!user.image"/>
+        <img src="assets/user-icon.jpg"/>
       </div>
 
       <div class="user-name pull-left">

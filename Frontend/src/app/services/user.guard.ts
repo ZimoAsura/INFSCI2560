@@ -15,7 +15,7 @@ export class UserGuard implements CanActivate{
       if(identity && (identity.role == 'User' || identity.role == 'Admin')){
           return true;
       } else {
-          this._router.navigate(['/(login)']);
+          this._router.navigate(['/login']);
           return false;
       }
     }

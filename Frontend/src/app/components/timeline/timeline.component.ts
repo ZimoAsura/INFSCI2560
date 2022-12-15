@@ -27,9 +27,8 @@ export class TimelineComponent implements OnInit {
   public status: string;
   public posts: any[];
   //Check if show or no button of Load More
-  public noMore = false;
+  // public noMore = false;
   public showImage;
-  public loading: boolean;
   //LIKES//
   public likes: any[];
   public liked: boolean;
@@ -45,7 +44,6 @@ export class TimelineComponent implements OnInit {
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
         this.url = GLOBAL.url;
-        this.loading = true;
         this.posts;
     }
 
@@ -58,10 +56,8 @@ export class TimelineComponent implements OnInit {
       this._postService.getPosts(this.token).subscribe(
         response => {
             if(response.posts) {
-              this.loading = false;
               this.posts = response.posts;
-              //UPDATE LIKES COUNTER AND HEART
-              // this.updateLikes();
+              console.log(this.posts[0]);
             } else {
                 this.status = 'error';
             }
@@ -79,7 +75,6 @@ export class TimelineComponent implements OnInit {
     //This functions comes from the component child Sidebar (Output), when the button post is clicked
     refresh(event = null){
       this.getPosts();
-      this.noMore = false;
     }
 
     showThisImage(id){
@@ -98,6 +93,7 @@ export class TimelineComponent implements OnInit {
         error => {
           console.log(<any>error);
         });
+      this.getPosts();
     }
 
     updateLikes(){
@@ -117,20 +113,18 @@ export class TimelineComponent implements OnInit {
                       });
 
                       this.likes.forEach((like) => {
-                        if(like.user._id == this.identity._id){
+                        if(like.user == this.identity._id){
                           this.posts[index].liked = true;
                         }
                       });
-
                     }).catch(error => console.log(error));
         });
     }
 
-
     doLike(post, event: any) {
       if(post.liked) {
         event.target.src = '../../../assets/images/empty-heart.png';
-        this.quitLike(post._id);
+        this.removeLike(post._id);
       }
 
       else if(!post.liked) {
@@ -138,7 +132,6 @@ export class TimelineComponent implements OnInit {
         this.addLike(post._id);
       }
     }
-
 
     addLike(postId){
       var like = new Like('', this.identity._id, postId);
@@ -154,7 +147,7 @@ export class TimelineComponent implements OnInit {
         });
     }
 
-    quitLike(postId){
+    removeLike(postId){
       this._likeService.deleteLike(this.token, postId).subscribe(
         response => {
           this.updateLikes();
